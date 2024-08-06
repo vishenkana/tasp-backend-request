@@ -1,0 +1,36 @@
+service:
+  port: 80
+  pool_size: 20
+
+logging:
+  timeout: 3
+
+  sinks:
+    console:
+      enable: true
+      level: debug
+
+    file:
+      enable: true
+      level: debug
+      path: /var/tasp/requests/log/
+
+pid:
+  path: /var/tasp/requests/pid
+
+database:
+  main: tasp
+  connections:
+    tasp:
+      host: tasp-db
+      port: 5432
+      db: tasp
+      type: md5
+      user: tasp
+      password: 12345678
+
+services:
+    reference:
+        host: tasp-reference
+        port: 80
+        prefix: /api/v1

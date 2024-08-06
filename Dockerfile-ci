@@ -1,0 +1,38 @@
+ARG REGISTRY=gl-registry/dev35/pkta/containers
+FROM ${REGISTRY}/dev:1.7.5-smolensk as build
+LABEL stage=builder
+
+COPY . /requests
+WORKDIR /requests
+
+ARG REPO=http://nexus:8081/repository/tasp/
+RUN echo "deb [trusted=yes] ${REPO} smolensk main" >> /etc/apt/sources.list.d/nexus.list
+
+RUN export DEBIAN_FRONTEND=noninteractive && \
+    apt-get update && \
+    xargs apt-get install -y --no-install-recommends < requirements-dev.txt
+
+RUN git submodule update --init --remote
+RUN mkdir build && cd build && cmake .. && ninja
+
+
+ARG REGISTRY=gl-registry/dev35/pkta/containers
+FROM ${REGISTRY}/astra:1.7.5-smolensk
+
+ARG REPO=http://nexus:8081/repository/tasp/
+RUN echo "deb [trusted=yes] ${REPO} smolensk main" >> /etc/apt/sources.list.d/nexus.list
+
+COPY ./requirements.txt /requirements.txt
+
+RUN export DEBIAN_FRONTEND=noninteractive && \
+    apt-get update && \
+    xargs apt-get install -y --no-install-recommends < /requirements.txt
+
+COPY --from=build /requests/build/bin/tasp-requests /usr/bin
+
+COPY etc/tasp-requests-docker.yml /etc/tasp/tasp-requests.yml
+
+STOPSIGNAL SIGINT
+
+EXPOSE 80
+CMD /usr/bin/tasp-requests

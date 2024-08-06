@@ -1,0 +1,12 @@
+Source: tasp-requests
+Section: utils
+Priority: optional
+Maintainer: dummy
+Standards-Version: 4.5.1
+
+Package: tasp-requests
+Architecture: amd64
+Depends: adduser, ${shlibs:Depends}, ${misc:Depends}
+Description: Microservice for managing requests
+ The microservice is designed to maintain applications for extracting
+ information from the archive and recording them on portable media.

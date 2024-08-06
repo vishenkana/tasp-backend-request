@@ -1,0 +1,20 @@
+service:
+  port: 49112
+  pool_size: 20
+
+database:
+  main: tasp
+  connections:
+    tasp:
+      host: 127.0.0.1
+      port: 5432
+      db: tasp
+      type: md5
+      user: tasp
+      password: 12345678
+
+services:
+    reference:
+        host: 127.0.0.1
+        port: 49111
+        prefix: /api/v1

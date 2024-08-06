@@ -1,0 +1,5 @@
+libtasp-common-dev
+libtasp-curl-dev
+libtasp-microservice-dev
+libtasp-db-pg-dev
+libjsoncpp-dev

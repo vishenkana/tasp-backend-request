@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  db:
+    image: tasp/db/requests:1.0.0
+    container_name: tasp-db
+    restart: always
+    volumes:
+      - ./postgresql:/var/lib/postgresql/data
+    ports:
+      - 5433:5432
+    expose:
+      - 5432
+    environment:
+      POSTGRES_PASSWORD: 12345678
+    networks:
+      tasp:
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  requests:
+    image: tasp/requests:1.0.0
+    container_name: tasp-requests
+    restart: always
+    ports:
+      - 8080:80
+    expose:
+      - 80
+    networks:
+      tasp:
+
+networks:
+  tasp:
+    name: tasp
+    ipam:
+     driver: default
+     config:
+       - subnet: 172.100.0.0/16
+    driver_opts:
+      com.docker.network.bridge.name: tasp

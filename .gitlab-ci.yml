@@ -1,0 +1,7 @@
+include:
+  - project: 'dev35/pkta/common/ci'
+    file: 'ci-base.yml'
+  - project: 'dev35/pkta/common/ci'
+    file: 'docker.yml'
+  - project: 'dev35/pkta/common/ci'
+    file: 'docker-db.yml'

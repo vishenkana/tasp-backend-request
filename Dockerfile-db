@@ -1,0 +1,5 @@
+ARG REGISTRY=tasp
+FROM ${REGISTRY}/postgresql:1.7.5-smolensk
+
+COPY docker/dbdeploy.sh /docker-entrypoint-initdb.d/deploy-requests.sh
+COPY src/sql /sql/requests

@@ -1,0 +1,4 @@
+libtasp-microservice
+libtasp-curl
+libtasp-db-pg
+gcc-astra-libs

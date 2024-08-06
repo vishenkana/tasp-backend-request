@@ -1,0 +1,3 @@
+#!/usr/bin/dh-exec
+build/bin/tasp-requests ${BIN_DIR}
+etc/*.yml ${CONF_DIR}
